@@ -1,7 +1,4 @@
 package com.driver.model;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,18 +6,17 @@ import java.util.List;
 @Entity
 @Table(name = "customer")
 public class Customer {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int customerId;
+
     private String mobile;
     private String password;
 
-    //private List<TripBooking> tripBookingList;
-
-    @JsonManagedReference
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<TripBooking> tripBookingList = new ArrayList<>();
+
+    public Customer() {
+    }
 
     public int getCustomerId() {
         return customerId;
@@ -51,16 +47,6 @@ public class Customer {
     }
 
     public void setTripBookingList(List<TripBooking> tripBookingList) {
-        this.tripBookingList = tripBookingList;
-    }
-
-    public Customer() {
-    }
-
-    public Customer(int customerId, String mobile, String password, List<TripBooking> tripBookingList) {
-        this.customerId = customerId;
-        this.mobile = mobile;
-        this.password = password;
         this.tripBookingList = tripBookingList;
     }
 }

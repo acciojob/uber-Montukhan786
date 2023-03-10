@@ -1,7 +1,4 @@
 package com.driver.model;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,33 +6,35 @@ import java.util.List;
 @Entity
 @Table(name = "driver")
 public class Driver {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int driverId;
+
     private String mobile;
     private String password;
-    //private Cab cab;
-    //private List<TripBooking> tripBookingList;
 
-    @JsonManagedReference
-    @OneToOne(mappedBy = "driver",cascade = CascadeType.ALL)
-    private Cab cab;
-
-    @JsonManagedReference
-    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL)
     private List<TripBooking> tripBookingList = new ArrayList<>();
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @OneToOne(mappedBy = "driver",cascade  = CascadeType.ALL)
+    private Cab cab;
 
     public Driver() {
-
     }
 
-    public Driver(int driverId, String mobNo, String password) {
-        this.driverId = driverId;
-        this.mobile = mobNo;
-        this.password = password;
+    public List<TripBooking> getTripBookingList() {
+        return tripBookingList;
+    }
+
+    public void setTripBookingList(List<TripBooking> tripBookingList) {
+        this.tripBookingList = tripBookingList;
+    }
+
+    public Cab getCab() {
+        return cab;
+    }
+
+    public void setCab(Cab cab) {
+        this.cab = cab;
     }
 
     public int getDriverId() {
@@ -61,21 +60,4 @@ public class Driver {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public Cab getCab() {
-        return cab;
-    }
-
-    public void setCab(Cab cab) {
-        this.cab = cab;
-    }
-
-    public List<TripBooking> getTripBookingList() {
-        return tripBookingList;
-    }
-
-    public void setTripBookingList(List<TripBooking> tripBookingList) {
-        this.tripBookingList = tripBookingList;
-    }
-
 }
